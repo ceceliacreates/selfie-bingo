@@ -17,8 +17,6 @@ import { Preferences } from '@capacitor/preferences';
 
 // TODO update reset game to also clear photos
 
-//TODO add instructions
-
 //TODO add real prompts
 
 //TODO check for bingo wins
