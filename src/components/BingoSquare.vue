@@ -28,7 +28,7 @@
 
 <script setup lang="ts">
 import { IonCard, IonModal, IonHeader,IonContent, IonToolbar, IonButton, IonTitle, IonButtons, IonIcon, IonImg } from '@ionic/vue';
-import { PropType, defineProps, ref, inject } from 'vue';
+import { PropType, ref, inject } from 'vue';
 import { BingoItem, BingoItemsProvider } from '@/types'; 
 import { camera, trash } from 'ionicons/icons';
 import { usePhotoGallery } from '@/composables/usePhotoGallery';

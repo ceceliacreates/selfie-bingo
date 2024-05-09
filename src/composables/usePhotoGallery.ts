@@ -15,10 +15,14 @@ export const usePhotoGallery = () => {
       });
 
       const fileName = Date.now() + '.jpeg';
-      savedFileImage.value = {
-        filepath: fileName,
-        webviewPath: photo.webPath,
-}
+
+      if (photo.webPath) {
+        savedFileImage.value = {
+          filepath: fileName,
+          webviewPath: photo.webPath,
+  }
+      }
+  
     };
   
     return {
