@@ -20,11 +20,10 @@
 <script setup lang="ts">
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonGrid, IonRow, IonCol, } from '@ionic/vue';
 import  BingoSquare  from '@/components/BingoSquare.vue'
-import { bingoItemsProvider } from '@/types'; 
+import { BingoItemsProvider } from '@/types'; 
 import { inject } from 'vue'
 
-
-const { bingoItems, markComplete } = inject<bingoItemsProvider>('bingoItems')!
+const { bingoItems, markComplete } = inject<BingoItemsProvider>('bingoItems')!
 
 </script>
 

@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 import { IonApp, IonRouterOutlet } from '@ionic/vue';
-import { BingoItem } from '@/types'; 
+import { BingoItem, SavedFileImage } from '@/types'; 
 import { ref, provide } from 'vue'
 import { Preferences } from '@capacitor/preferences';
 
@@ -16,6 +16,8 @@ import { Preferences } from '@capacitor/preferences';
 //TODO display photo as bingo square instead of text
 
 // TODO update reset game to also clear photos
+
+//TODO add instructions
 
 //TODO add real prompts
 
@@ -114,6 +116,14 @@ const markComplete = (id: number) => {
  saveBingoItems(bingoItemsString)
 }
 
+const addPhoto = (id: number, savedFileImage: SavedFileImage) => {
+  const item = bingoItems.value.find(item => item.id === id)
+
+  if (item) {
+    item.photo = savedFileImage;
+  }
+}
+
 const clearBingoItems = async () => {
 
 await Preferences.clear()
@@ -125,6 +135,6 @@ loadBingoItems()
 loadBingoItems()
 
 provide('bingoItems', {
-  bingoItems, loadBingoItems, saveBingoItems, markComplete, clearBingoItems
+  bingoItems, loadBingoItems, saveBingoItems, markComplete, addPhoto, clearBingoItems
 })
 </script>

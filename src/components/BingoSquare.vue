@@ -13,15 +13,25 @@
     </ion-header>
     <ion-content class="ion-padding">
       <p>{{ item?.text }}</p>
-      <ion-button color="success" @click="markComplete()">Mark Complete</ion-button>
+      <div class="photo">
+        <ion-img :src="photoPath"></ion-img>
+        <ion-button @click="handlePhoto">
+          <ion-icon :icon="camera"></ion-icon>
+        </ion-button>
+        <div>
+          <ion-button color="success" @click="markComplete()">Mark Complete</ion-button>
+        </div>
+      </div>
     </ion-content>
     </ion-modal>
 </template>
 
 <script setup lang="ts">
-import { IonCard, IonModal, IonHeader,IonContent, IonToolbar, IonButton, IonTitle, IonButtons } from '@ionic/vue';
-import { PropType, defineProps, ref } from 'vue';
-import { BingoItem } from '@/types'; 
+import { IonCard, IonModal, IonHeader,IonContent, IonToolbar, IonButton, IonTitle, IonButtons, IonIcon, IonImg } from '@ionic/vue';
+import { PropType, defineProps, ref, inject } from 'vue';
+import { BingoItem, BingoItemsProvider } from '@/types'; 
+import { camera, trash } from 'ionicons/icons';
+import { usePhotoGallery } from '@/composables/usePhotoGallery';
 
 const emit = defineEmits(['markComplete'])
   
@@ -33,6 +43,7 @@ const emit = defineEmits(['markComplete'])
 });
 
 const modal = ref();
+const photoPath = ref('../../public/images/selfieplaceholder.png');
 
 const openModal = () => {
   if (modal.value) {
@@ -47,6 +58,21 @@ const markComplete = () => {
 emit('markComplete', props.item.id)
 
 modal.value.$el.dismiss();
+}
+
+const { takePhoto, savedFileImage } = usePhotoGallery();
+
+const { addPhoto } = inject<BingoItemsProvider>('bingoItems')!
+
+const handlePhoto = async () => {
+  await takePhoto();
+
+  if (savedFileImage.value) {
+    addPhoto(props.item.id, savedFileImage.value);
+
+    photoPath.value = savedFileImage.value.webviewPath;
+  }
+
 }
 </script>
 
@@ -69,5 +95,9 @@ modal.value.$el.dismiss();
 .is-completed {
   background-color: #28a745;
   color: black;
+}
+
+.photo {
+  text-align: center;
 }
 </style>
