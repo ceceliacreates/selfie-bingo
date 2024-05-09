@@ -43,7 +43,7 @@ const emit = defineEmits(['markComplete'])
 });
 
 const modal = ref();
-const photoPath = ref('../../public/images/selfieplaceholder.png');
+const photoPath = ref('./images/selfieplaceholder.png');
 
 const openModal = () => {
   if (modal.value) {
