@@ -8,7 +8,6 @@
 import { IonApp, IonRouterOutlet } from '@ionic/vue';
 import { BingoItem } from '@/types'; 
 import { ref, provide } from 'vue'
-import { Capacitor } from '@capacitor/core';
 import { Preferences } from '@capacitor/preferences';
 
 
@@ -73,13 +72,9 @@ const loadBingoItems = async () => {
 
   // loads bingoItems from local/device storage if exists
 
-   if (Capacitor.isNativePlatform()) {
     const result = await Preferences.get({ key: 'bingoItems'})
 
     bingoItemsString = result.value || '';
-   } else {
-    bingoItemsString = localStorage.getItem('bingoItems') || '';
-   }
 
    if (bingoItemsString) {
  
@@ -102,14 +97,10 @@ const loadBingoItems = async () => {
 
 const saveBingoItems = async (bingoItemsString: string) => {
 
-  if (Capacitor.isNativePlatform()) {
     await Preferences.set({
       key: 'bingoItems',
       value: bingoItemsString
     })
-  } else {
-    localStorage.setItem('bingoItems', bingoItemsString)
-  }
 
 }
 
@@ -125,10 +116,17 @@ const markComplete = (id: number) => {
  saveBingoItems(bingoItemsString)
 }
 
+const clearBingoItems = async () => {
+
+await Preferences.clear()
+loadBingoItems()
+
+}
+
 // loads bingo Items on initialization
 loadBingoItems()
 
 provide('bingoItems', {
-  bingoItems, loadBingoItems, saveBingoItems, markComplete
+  bingoItems, loadBingoItems, saveBingoItems, markComplete, clearBingoItems
 })
 </script>

@@ -20,22 +20,11 @@
 
 <script setup lang="ts">
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonButton } from '@ionic/vue';
-import { Capacitor } from '@capacitor/core';
-import { Preferences } from '@capacitor/preferences';
 import { bingoItemsProvider } from '@/types'; 
 import { inject } from 'vue'
 
-const { loadBingoItems } = inject<bingoItemsProvider>('bingoItems')!
+const { clearBingoItems } = inject<bingoItemsProvider>('bingoItems')!
 
-const clearBingoItems = async () => {
-  if (Capacitor.isNativePlatform()) {
-    await Preferences.clear()
-  } else {
-    localStorage.clear();
-  }
-  loadBingoItems()
-
-}
 </script>
 
 <style scoped>

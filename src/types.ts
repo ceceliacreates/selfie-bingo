@@ -9,4 +9,5 @@ export interface bingoItemsProvider {
   loadBingoItems: () => void;
   saveBingoItems: (bingoItemsString: string) => void;
   markComplete: (id: number) => void;
+  clearBingoItems: () => void;
 }
