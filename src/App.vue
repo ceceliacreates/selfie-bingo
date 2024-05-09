@@ -10,20 +10,29 @@ import { BingoItem, SavedFileImage } from '@/types';
 import { ref, provide } from 'vue'
 import { Preferences } from '@capacitor/preferences';
 
+//TODO Save photos to gallery by default
 
-//TODO take/upload photo to mark complete
+//TODO Launch front-facing camera by default
 
-//TODO display photo as bingo square instead of text
+//TODO Persistent photo storage
 
-// TODO update reset game to also clear photos
+//TODO add undo markComplete
 
-//TODO add instructions
+//TODO Fix Netlify redirects issue
+
+//TODO improve display of prompt text on square
+
+//TODO display photo as bingo square instead of text ??
+
+//TODO update reset game to also clear photos ??
 
 //TODO add real prompts
 
 //TODO check for bingo wins
 
-//TODO add undo markComplete
+//ADD Game selection dropdown - not MVP
+
+//ADD AI-generate new game option - not MVP
 
 const items = [
   'Mollit commodo incididunt labore proident consectetur eu ea anim adipisicing minim ex.',
