@@ -1,5 +1,5 @@
 import { ref, onMounted, watch } from 'vue';
-import { Camera, CameraResultType, CameraSource, Photo } from '@capacitor/camera';
+import { Camera, CameraDirection, CameraResultType, CameraSource, Photo } from '@capacitor/camera';
 import { Filesystem, Directory } from '@capacitor/filesystem';
 import { Preferences } from '@capacitor/preferences';
 import { SavedFileImage } from '@/types'
@@ -12,6 +12,8 @@ export const usePhotoGallery = () => {
         resultType: CameraResultType.Uri,
         source: CameraSource.Camera,
         quality: 100,
+        direction: CameraDirection.Front,
+        saveToGallery: true
       });
 
       const fileName = Date.now() + '.jpeg';
