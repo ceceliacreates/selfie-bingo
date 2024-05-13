@@ -31,4 +31,10 @@ const { clearBingoItems } = inject<BingoItemsProvider>('bingoItems')!
 ion-content {
   text-align: center;
 }
+ion-button {
+  margin-top: 30px;
+}
+p {
+  margin: 15px;
+}
 </style>

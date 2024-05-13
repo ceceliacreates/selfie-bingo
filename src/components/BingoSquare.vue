@@ -8,10 +8,12 @@
         <ion-buttons slot="start">
           <ion-button color="medium" @click="cancel">Cancel</ion-button>
         </ion-buttons>
-        <ion-title>{{ item?.id }}</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content class="ion-padding">
+      <p>
+        <b>Tap the blue camera icon to take a selfie with someone who:</b>
+      </p>
       <p>{{ item?.text }}</p>
       <div class="photo">
         <ion-img :src="photoPath"></ion-img>
@@ -19,7 +21,7 @@
           <ion-icon :icon="camera"></ion-icon>
         </ion-button>
         <div>
-          <ion-button color="success" @click="markComplete()">Mark Complete</ion-button>
+          <ion-button :color="item.completed ? 'medium' : 'success'" :disabled="item.completed" @click="markComplete()">{{ item.completed ? 'Already Complete' : 'Mark Complete' }}</ion-button>
         </div>
       </div>
     </ion-content>
@@ -30,7 +32,7 @@
 import { IonCard, IonModal, IonHeader,IonContent, IonToolbar, IonButton, IonTitle, IonButtons, IonIcon, IonImg } from '@ionic/vue';
 import { PropType, ref, inject } from 'vue';
 import { BingoItem, BingoItemsProvider } from '@/types'; 
-import { camera, trash } from 'ionicons/icons';
+import { camera } from 'ionicons/icons';
 import { usePhotoGallery } from '@/composables/usePhotoGallery';
 
 const emit = defineEmits(['markComplete'])
@@ -77,6 +79,9 @@ const handlePhoto = async () => {
 </script>
 
 <style scoped>
+ion-content {
+  text-align: center;
+}
 .bingo-square {
   width: 100%;
   height: 100%;
@@ -87,6 +92,7 @@ const handlePhoto = async () => {
 }
 
 .bingo-text {
+  margin: 5px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -99,5 +105,8 @@ const handlePhoto = async () => {
 
 .photo {
   text-align: center;
+}
+ion-button {
+  margin: 15px;
 }
 </style>

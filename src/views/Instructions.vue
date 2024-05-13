@@ -16,7 +16,8 @@
       <ol>
         <li>Tap a bingo square to view the full text of the prompt.</li>
         <li>Find a person that matches the prompt.</li>
-        <li>Click the "Take Photo" button to capture a selfie with them! The bingo square will automatically update as complete. <i>Note: If you prefer not to upload photos, you can click "Mark Complete" instead</i>.</li>
+        <li>Tap the blue camera icon to capture a selfie with them!</li>
+        <li>Tap "Mark Complete".</li>
         <li>Once you have four squares in a row (including diagonally), you win!</li>
       </ol>
       <p>Your progress is saved even if you close out of the app. If something goes wrong, you can reset the game from the Settings tab.</p>
@@ -32,6 +33,6 @@ import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/vue
 
 <style scoped>
 .instructions {
-  margin: 10px
+  margin: 15px
 }
 </style>

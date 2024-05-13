@@ -10,48 +10,48 @@ import { BingoItem, SavedFileImage } from '@/types';
 import { ref, provide } from 'vue'
 import { Preferences } from '@capacitor/preferences';
 
-//TODO Save photos to gallery by default
-
-//TODO Launch front-facing camera by default
-
-//TODO Persistent photo storage
-
-//TODO add undo markComplete
-
-//TODO Fix Netlify redirects issue
-
-//TODO improve display of prompt text on square
+//TODO Persistent photo storage -- not sure if this is needed because we're saving photo to gallery
 
 //TODO display photo as bingo square instead of text ??
 
 //TODO update reset game to also clear photos ??
-
-//TODO add real prompts
-
-//TODO check for bingo wins
 
 //ADD Game selection dropdown - not MVP
 
 //ADD AI-generate new game option - not MVP
 
 const items = [
-  'Mollit commodo incididunt labore proident consectetur eu ea anim adipisicing minim ex.',
- 'Ullamco cillum eiusmod id reprehenderit tempor laboris commodo et aute excepteur eu.', 
- 'Culpa est incididunt qui eu duis.', 
- 'Veniam cillum tempor id laboris.', 
- 'Adipisicing mollit nostrud enim dolore ut.',
-  'Eiusmod velit ut nostrud nulla deserunt proident anim nostrud exercitation voluptate qui officia occaecat culpa.', 
-  'Sint reprehenderit duis et officia laboris ullamco.', 
-  'Non reprehenderit aliqua id commodo ex nisi reprehenderit eiusmod veniam eu.', 
-  'Aliqua Lorem fugiat deserunt exercitation esse nostrud in duis magna incididunt in tempor.', 
-  'Eu Lorem Lorem veniam nisi excepteur duis laborum voluptate sit.',
-  'Eiusmod minim veniam aliquip laborum voluptate.', 
-  'Velit exercitation labore pariatur pariatur sit mollit reprehenderit ut do irure voluptate.', 
-  'Consectetur occaecat duis eiusmod sunt eiusmod laborum culpa excepteur consequat cillum duis.', 
-  'Reprehenderit deserunt et veniam fugiat fugiat non deserunt ut fugiat elit ullamco veniam excepteur do.', 
-  'Occaecat Lorem commodo pariatur quis ex non Lorem veniam ut consectetur magna consequat occaecat cupidatat.',
-  'Aliquip deserunt aliquip commodo tempor elit.', 
+  'Is involved with the nonprofit that provides hygiene and laundry services',
+ 'Is involved with the nonprofit founded in 1982', 
+ 'Is involved with the nonprofit that aims to "light up the darkness"', 
+ 'Is involved with the nonprofit that is the most comprehensive AIDS service organization in the Southeast', 
+ 'Is involved with the nonprofit that operates a thrift store',
+  'Is involved with the nonprofit that provides shelter and services to queer youth', 
+  'Has attended an Out in Tech event before', 
+  'Has performed on a stage', 
+  'Has walked in a Pride parade', 
+  'Was born in Atlanta',
+  'Has run a marathon or half-marathon', 
+  'Works from home', 
+  'Has lived in another country', 
+  'Is involved with Atlanta Pride Run 5K for the first time this year', 
+  'Has attended an Atlanta pro sports game (Dream, Falcons, Vibe, etc.) in the past year',
+  'Has ridden the MARTA in the past month', 
 ];
+
+const shuffle = (array: string[])  => {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]]
+  }
+  return array
+}
+
+const bingoItems = ref<BingoItem[]>([])
+
+const completedSquares = ref<Number[]>([])
+
+const gameWon = ref<Boolean>(false)
 
 const winningCombos = [
   [1,2,3,4],
@@ -66,15 +66,15 @@ const winningCombos = [
   [4,7,10,13]
 ]
 
-const shuffle = (array: string[])  => {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]]
+const checkForWin = () => {
+  if (completedSquares.value.length < 4) {
+    return false
+  } else {
+    return winningCombos.some(combo =>
+      combo.every(num => completedSquares.value.includes(num))
+    );
   }
-  return array
 }
-
-const bingoItems = ref<BingoItem[]>([])
 
 const loadBingoItems = async () => {
   let bingoItemsString = ''
@@ -118,6 +118,8 @@ const markComplete = (id: number) => {
 
  if (item) {
   item.completed = true;
+  completedSquares.value.push(id)
+  gameWon.value = checkForWin()
  }
 
  const bingoItemsString = JSON.stringify(bingoItems.value)
@@ -136,6 +138,7 @@ const addPhoto = (id: number, savedFileImage: SavedFileImage) => {
 const clearBingoItems = async () => {
 
 await Preferences.clear()
+gameWon.value = false;
 loadBingoItems()
 
 }
@@ -144,6 +147,6 @@ loadBingoItems()
 loadBingoItems()
 
 provide('bingoItems', {
-  bingoItems, loadBingoItems, saveBingoItems, markComplete, addPhoto, clearBingoItems
+  bingoItems, gameWon, loadBingoItems, saveBingoItems, markComplete, addPhoto, clearBingoItems
 })
 </script>

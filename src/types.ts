@@ -7,6 +7,7 @@ export interface BingoItem {
 
 export interface BingoItemsProvider {
   bingoItems: BingoItem[];
+  gameWon: Boolean;
   loadBingoItems: () => void;
   saveBingoItems: (bingoItemsString: string) => void;
   markComplete: (id: number) => void;
