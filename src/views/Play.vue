@@ -48,7 +48,7 @@ const setDisplayGameWonAlert = (state: boolean) => {
   width: 100%;
 }
 .full-height {
-  height: 21vh;
+  height: 25%;
 }
 ion-col {
   display: flex;

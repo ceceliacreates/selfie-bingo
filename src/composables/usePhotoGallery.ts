@@ -10,7 +10,6 @@ export const usePhotoGallery = () => {
     const takePhoto = async () => {
       const photo = await Camera.getPhoto({
         resultType: CameraResultType.Uri,
-        source: CameraSource.Camera,
         quality: 100,
         direction: CameraDirection.Front,
         saveToGallery: true
