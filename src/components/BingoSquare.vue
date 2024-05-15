@@ -16,7 +16,7 @@
       </p>
       <p>{{ item?.text }}</p>
       <div class="photo">
-        <ion-img :src="photoPath"></ion-img>
+        <ion-img :src="item.photo?.webviewPath || './images/selfieplaceholder.png'"></ion-img>
         <ion-button @click="handlePhoto">
           <ion-icon :icon="camera"></ion-icon>
         </ion-button>
@@ -45,7 +45,6 @@ const emit = defineEmits(['markComplete'])
 });
 
 const modal = ref();
-const photoPath = ref('./images/selfieplaceholder.png');
 
 const openModal = () => {
   if (modal.value) {
@@ -72,7 +71,6 @@ const handlePhoto = async () => {
   if (savedFileImage.value) {
     addPhoto(props.item.id, savedFileImage.value);
 
-    photoPath.value = savedFileImage.value.webviewPath;
   }
 
 }
